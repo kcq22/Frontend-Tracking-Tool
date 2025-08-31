@@ -1,0 +1,60 @@
+{
+  "name": "frontend-tracking-tool",
+  "version": "1.0.0",
+  "description": "基于 Snowplow JS Tracker 的增强型前端监控方案",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist stats-*.html",
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "prepublishOnly": "npm run build && npm test",
+    "prepare": "npm run build",
+    "lint": "eslint src --ext .js",
+    "test": "echo \"No tests yet\" && exit 0",
+    "prettier:check": "prettier --check \"src/**/*.js\"",
+    "size": "echo \"build then open stats-*.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kcq22/Frontend-Tracking-Tool.git"
+  },
+  "keywords": [
+    "Snowplow",
+    "Frontend-Tracking",
+    "Vue3"
+  ],
+  "author": "kcq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kcq22/Frontend-Tracking-Tool/issues"
+  },
+  "homepage": "https://github.com/kcq22/Frontend-Tracking-Tool#readme",
+  "dependencies": {
+    "@snowplow/browser-plugin-link-click-tracking": "^4.6.5",
+    "@snowplow/browser-tracker": "^4.6.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.34.0",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "rollup": "^2.79.2",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
