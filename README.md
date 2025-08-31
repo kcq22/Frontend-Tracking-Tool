@@ -91,7 +91,7 @@ trackClick(
 )
 ```
 
-## 🚀 手动上报
+## 🚀 手动上报js错误信息
 ```javascript
 import { reportJsError } from 'frontend-tracker-sdk'
 
