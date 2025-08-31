@@ -6,7 +6,7 @@ import {
   enableActivityTracking,
 } from '@snowplow/browser-tracker'
 import { enableLinkClickTracking } from '@snowplow/browser-plugin-link-click-tracking'
-import { setupSnowplowMock } from './utils/mockSnowplow'
+// import { setupSnowplowMock } from './utils/mockSnowplow'
 import { startPageTracking } from './utils/RouterTracker'
 import { getRequestId } from './utils'
 import { setupGlobalErrorHandlers } from './utils/ErrorHandler'
