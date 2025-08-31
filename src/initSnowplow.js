@@ -10,7 +10,7 @@ import { enableLinkClickTracking } from '@snowplow/browser-plugin-link-click-tra
 import { startPageTracking } from './utils/RouterTracker'
 import { getRequestId } from './utils'
 import { setupGlobalErrorHandlers } from './utils/ErrorHandler'
-import { useCustomFetch } from '@/utils/Tracker/utils/useCustomFetch'
+import { useCustomFetch } from './utils/useCustomFetch'
 
 export const initFrontendTracker = (opts = {}, router) => {
   let stopTracking
