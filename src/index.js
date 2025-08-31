@@ -1,7 +1,8 @@
 import { getErrorHandler, reportJsError } from './utils/ErrorHandler'
-import { trackClick, trackCustomEvent } from './initSnowplow'
+import { initFrontendTracker, trackClick, trackCustomEvent } from './initSnowplow'
 
 export {
+  initFrontendTracker,
   trackClick,
   trackCustomEvent,
   getErrorHandler,

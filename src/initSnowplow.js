@@ -14,9 +14,9 @@ import { useCustomFetch } from '@/utils/Tracker/utils/useCustomFetch'
 
 export const initFrontendTracker = (opts = {}, router) => {
   let stopTracking
-  if (opts.localDebug) {
-    setupSnowplowMock()
-  }
+  // if (opts.localDebug) {
+  //   setupSnowplowMock()
+  // }
   if (router) { // 路由切换时自动埋点 PV
     router.afterEach((to, from) => {
       trackPage(to.fullPath, from.fullPath)
@@ -28,9 +28,9 @@ export const initFrontendTracker = (opts = {}, router) => {
     url: opts.url,
     trackerId: opts.trackerId,
     formatInput: opts.formatInput,
+    encodeBase64: opts.encodeBase64,
     appId: opts.appId,
     debug: opts.debug,
-    localDebug: opts.localDebug,
     headers: opts.headers,
     platform: opts.platform,
     enableErrHandler: opts.enableErrHandler,
@@ -53,12 +53,12 @@ export function initSnowplow(
     url,
     trackerId = 'sp1',
     appId,
+    encodeBase64 = true,
     platform = 'web',
     headers,
     formatInput,
     otherOptions,
     debug = false,
-    localDebug = false,
     activityTrack,
     linkTrack,
     enableErrHandler = true,
@@ -83,7 +83,7 @@ export function initSnowplow(
   newTracker(trackerId, url, {
     appId,
     platform,
-    encodeBase64: false,
+    encodeBase64,
     debug, // 打开调试模式，可在控制台查看
     context: { requestId: getRequestId() },
     headers,
