@@ -23,12 +23,12 @@ yarn add frontend-tracking-tool
 // main.js 
 // 初始化埋点 SDK（调用一次即可）
 import { createApp } from 'vue'
-import { initFrontendTracker, getErrorHandler } from 'frontend-tracking-tool'
+import { FrontendTracker } from 'frontend-tracking-tool'
 
 ...
 const app = createApp(App)
 
-initFrontendTracker({
+const config = {
   trackerId: 'your_tracker_id',
   appId: 'your_app_id',
   url: 'your_app_url',
@@ -43,6 +43,7 @@ initFrontendTracker({
   linkClickTrackingOptions: { // 链接点击事件配置 需要开启链接点击事件
     trackContent: true
   },
+  useCustomFetch: true, // 是否使用自定义的 fetch
   enableErrHandler: true, // 是否捕获错误信息 默认开启
   headers: { // 自定义请求头 可以不传 默认 'Content-Type': 'application/json'
     'Content-Type': 'application/json'
@@ -52,11 +53,17 @@ initFrontendTracker({
       customData: data
     }
   }
-})
+}
 
-// 挂 Vue 全局错误处理器
-app.config.errorHandler = getErrorHandler()
-  
+const tracker = new FrontendTracker(config)
+tracker.init(router) // router可以不传
+// 全局错误处理（直接用实例方法）
+if (app) {
+  app.config.errorHandler = tracker.getVueErrorHandler()
+}
+// 全局挂在 tracker
+window.tracker = tracker // 或者 provide('tracker', tracker)
+
 ...
 app.mount('#app')
 
@@ -64,8 +71,7 @@ app.mount('#app')
 
 ## 🚀 手动上报
 ```javascript
-
-import { trackClick } from 'frontend-tracker-sdk'
+// tracker 已挂载全局
 
 // 参数说明
 /**
@@ -82,7 +88,7 @@ const extraParams = {
   params2: 'value2'
 }
 
-trackClick(
+tracker.trackEvent(
   'button',                // category
   'click',                 // action
   '注册按钮',               // label
@@ -93,13 +99,12 @@ trackClick(
 
 ## 🚀 手动上报js错误信息
 ```javascript
-import { reportJsError } from 'frontend-tracker-sdk'
-
+// tracker 已挂载全局
 try {
   // 模拟一个业务逻辑错误
   throw new Error('用户数据加载失败')
 } catch (e) {
-  reportJsError(e, {
+  tracker.reportJsError(e, {
     url: window.location.href,
     component: 'UserProfile',
     requestData: { userId: 12345 }
@@ -107,10 +112,10 @@ try {
 }
 
 // 也可以直接传字符串
-reportJsError('后端返回非法数据')
+tracker.reportJsError('后端返回非法数据')
 
 // 或者传一个对象
-reportJsError(
+tracker.reportJsError(
   { code: 500, message: 'Internal Server Error' },
   { api: '/user/info', method: 'GET' }
 )
